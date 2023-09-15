@@ -94,7 +94,8 @@ def map_food_category(df):
 
     for category, foods in foods_json.items():
         for food in foods:
-            df_foods = df_foods.concat(['Category': category, 'Food': food], ignore_index=True)
+            df_foods = pd.concat([df_foods, {'Category': category, 'Food': food}], ignore_index=True)
+            # df_foods = df_foods.concat(['Category': category, 'Food': food], ignore_index=True)
 
     df['match'] = df['Ingredient_Translated'].apply(
         lambda x: process.extractOne(x, df_foods['Food'].tolist(), score_cutoff=score_cutoff)[0] if process.extractOne(
